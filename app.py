@@ -117,4 +117,4 @@ def show_fsm():
 
 if __name__ == "__main__":
     port = os.environ.get("PORT", 8000)
-    app.run(host="192.168.43.27", port=port, debug=True)
+    app.run(host="127.0.0.1", port=port, debug=True)
