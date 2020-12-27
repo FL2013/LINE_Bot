@@ -112,11 +112,11 @@ def result(re_token):
         n=6
     fruit=state.fru[n]
     veg=state.veg[n]
-    meat=(total_cal*0.2/4-milk*8)/7
+    meat=(total_cal*0.2/4-milk*8)/16
     meat=(int)(meat+0.5)
-    oil=(total_cal*0.3/9-milk*4)/5
+    oil=(total_cal*0.3/9-milk*4)/12
     oil=(int)(oil+0.5)
-    rice=(total_cal*0.5/4-milk*12-veg*5-fruit*15)/15/4
+    rice=(total_cal*0.5/4-milk*12-fruit*15)/15/4
     rice=(int)(rice+0.5)
     
     reply=reply+"您的一天所需營養:\n"
