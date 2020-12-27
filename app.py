@@ -39,8 +39,8 @@ app = Flask(__name__, static_url_path="")
 
 
 # get channel_secret and channel_access_token from your environment variable
-channel_secret = os.getenv("LINE_CHANNEL_SECRET", None)
-channel_access_token = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", None)
+channel_secret = "95ddc092f3a8e4f51dda8d4d0e043e08"
+channel_access_token = "mFC8FpopMi8xVPR1JbRtaAfCNnyYCesTmpNRxtfhQQbGsmyDphUODmRSdX1gXpIRO9uV4PkLRKGQE5bW7Z0/0wsetr/rMSUd5szRHPpnoE2VOu109qNtqYYVcS5Fv351+tFZd2vkTv+/qHakTYF+ygdB04t89/1O/w1cDnyilFU="
 if channel_secret is None:
     print("Specify LINE_CHANNEL_SECRET as environment variable.")
     sys.exit(1)
@@ -100,8 +100,11 @@ def webhook_handler():
             continue
         if not isinstance(event.message.text, str):
             continue
+        
         print(f"\nFSM STATE: {machine.state}")
         print(f"REQUEST BODY: \n{body}")
+        if event.message.text == "user":
+            send_text_message(event.reply_token, "read user")
         response = machine.advance(event)
         if response == False:
             send_text_message(event.reply_token, "Not Entering any State")
@@ -117,6 +120,9 @@ def show_fsm():
 def hello():
     return "hello from python"
 
+
 if __name__ == "__main__":
-    port = os.environ.get("PORT", 8000)
-    app.run(host="0.0.0.0", port=port, debug=True)
+     
+  
+     port = os.environ.get("PORT", 8000)
+     app.run(host="0.0.0.0", port=4040, debug=True)
