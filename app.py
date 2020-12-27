@@ -10,28 +10,83 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from fsm import TocMachine
 from utils import send_text_message
 from self_reply import decide
+import pydot
 
 load_dotenv()
 
 
 machine = TocMachine(
-    states=["user", "state1", "state2"],
+    states=["user_join", "wait_old", "wait_height","wait_weight","wait_gender","wait_sport"],
     transitions=[
         {
-            "trigger": "advance",
-            "source": "user",
-            "dest": "state1",
-            "conditions": "is_going_to_state1",
+            "trigger": "input",
+            "source": "user_join",
+            "dest": "wait_old",
+            "conditions": "Start",
         },
         {
-            "trigger": "advance",
-            "source": "user",
-            "dest": "state2",
-            "conditions": "is_going_to_state2",
+            "trigger": "input",
+            "source": "wait_old",
+            "dest": "wait_height",
+            "conditions": "0~150",
         },
-        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
+        {
+            "trigger": "input",
+            "source": "wait_height",
+            "dest": "wait_weight",
+            "conditions": "0~300",
+        },
+        {
+            "trigger": "input",
+            "source": "wait_weight",
+            "dest": "wait_gender",
+            "conditions": "0~200",
+        },
+        {
+            "trigger": "input",
+            "source": "wait_gender",
+            "dest": "wait_sport",
+            "conditions": "男or女",
+        },
+        {
+            "trigger": "input",
+            "source": "wait_sport",
+            "dest": "user_join",
+            "conditions": "0~5000",
+        },
+        {
+            "trigger": "input",
+            "source": "wait_old",
+            "dest": "wait_old",
+            "conditions": "not in 0~150",
+        },
+        {
+            "trigger": "input",
+            "source": "wait_height",
+            "dest": "wait_height",
+            "conditions": "not in 0~300",
+        },
+        {
+            "trigger": "input",
+            "source": "wait_weight",
+            "dest": "wait_weight",
+            "conditions": "not in 0~200",
+        },
+        {
+            "trigger": "input",
+            "source": "wait_gender",
+            "dest": "wait_gender",
+            "conditions": "not 男or女",
+        },
+        {
+            "trigger": "input",
+            "source": "wait_sport",
+            "dest": "wait_sport",
+            "conditions": "not in 0~5000",
+        },
+        {"trigger": "input", "source": ["wait_height","wait_weight","wait_gender","wait_sport"], "dest": "wait_old","conditions":"Restart"},
     ],
-    initial="user",
+    initial="user_join",
     auto_transitions=False,
     show_conditions=True,
 )
@@ -112,15 +167,17 @@ def webhook_handler():
 
 @app.route("/show-fsm", methods=["GET"])
 def show_fsm():
-    machine.get_graph().draw("fsm.svg", prog="dot", format="svg")
-    return send_file("fsm.svg", mimetype="image/svg")
+    machine.get_graph().draw("fsm.png", prog="dot", format="png")
+    return send_file("fsm.png", mimetype="image/png")
 @app.route("/")
 def hello():
+    
+    print (pydot.find_graphviz())
     return "hello from python"
 
 
 if __name__ == "__main__":
      
-  
+     
      port = os.environ.get("PORT", 8000)
      app.run(host="0.0.0.0", port=port, debug=True)
