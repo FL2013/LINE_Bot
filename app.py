@@ -11,7 +11,6 @@ from fsm import TocMachine
 from utils import send_text_message
 from self_reply import decide
 
-
 load_dotenv()
 
 
