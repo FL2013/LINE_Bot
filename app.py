@@ -10,7 +10,7 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from fsm import TocMachine
 from utils import send_text_message
 from self_reply import decide
-import pydot
+
 
 load_dotenv()
 
@@ -173,7 +173,7 @@ def show_fsm():
 def hello():
     
 
-    return pydot.find_graphviz()
+    return "hello from python
 
 
 if __name__ == "__main__":
