@@ -21,9 +21,7 @@ def decide(re_token,text):
             send_text_message(re_token, "請輸入您的年齡(0~150):")
         else:
             send_text_message(re_token, "如要開始服務，請輸入 Start")
-    elif text=="Restart":
-        state.s=1
-        send_text_message(re_token, "請輸入您的年齡(0~150):")
+    
     elif state.s==1: 
         try:
             n=(int)(text)
@@ -35,47 +33,50 @@ def decide(re_token,text):
             send_text_message(re_token, "請輸入您的身高(cm):")
         else:
             send_text_message(re_token, "輸入錯誤，請正確輸入您的年齡(0~150):")
+    elif text=="Restart":
+        state.s=1
+        send_text_message(re_token, "請輸入您的年齡(0~150):")
     elif state.s==2:
         try:
             n=(int)(text)
         except ValueError:
-            send_text_message(re_token, "輸入錯誤，請正確輸入您的身高(0~300)(cm)\n或是輸入Restart重新輸入")
+            send_text_message(re_token, "輸入錯誤，請正確輸入您的身高(0~300)(cm)\n或是輸入Restart重新開始")
         if (int)(text)>0 and (int)(text)<300:
             state.height=(int)(text)
             state.s+=1
             send_text_message(re_token, "請輸入您的體重(kg):")
         else:
-            send_text_message(re_token, "輸入錯誤，請正確輸入您的身高(0~300)(cm)\n或是輸入Restart重新輸入")
+            send_text_message(re_token, "輸入錯誤，請正確輸入您的身高(0~300)(cm)\n或是輸入Restart重新開始")
     elif state.s==3:
         try:
             n=(int)(text)
         except ValueError:
-            send_text_message(re_token, "輸入錯誤，請正確輸入您的體重(0~200)(kg)\n或是輸入Restart重新輸入")
+            send_text_message(re_token, "輸入錯誤，請正確輸入您的體重(0~200)(kg)\n或是輸入Restart重新開始")
         if (int)(text)>0 and (int)(text)<200:
             state.weight=(int)(text)
             state.s+=1
             send_text_message(re_token, "請輸入您的性別(男or女):")
         else:
-            send_text_message(re_token, "輸入錯誤，請正確輸入您的體重(0~200)(kg)\n或是輸入Restart重新輸入")
+            send_text_message(re_token, "輸入錯誤，請正確輸入您的體重(0~200)(kg)\n或是輸入Restart重新開始")
     elif state.s==4:
         if text=="男" or text=="女":
             state.gender=text
             state.s+=1
             send_text_message(re_token, "請輸入您平均一周的運動量(分鐘):")
         else:
-            send_text_message(re_token, "輸入錯誤，請正確輸入您的性別(男or女)\n或是輸入Restart重新輸入")
+            send_text_message(re_token, "輸入錯誤，請正確輸入您的性別(男or女)\n或是輸入Restart重新開始")
     elif state.s==5:
         try:
             n=(int)(text)
         except ValueError:
-            send_text_message(re_token, "輸入錯誤，請正確輸入您平均一周的運動量(分鐘)\n或是輸入Restart重新輸入")
+            send_text_message(re_token, "輸入錯誤，請正確輸入您平均一周的運動量(分鐘)\n或是輸入Restart重新開始")
         if (int)(text)>=0 and (int)(text)<5000:
             state.movement=(int)(text)
             state.s+=1
             result(re_token)
             state.s=0
         else:
-            send_text_message(re_token, "輸入錯誤，請正確輸入您平均一周的運動量(0~5000)(分鐘)\n或是輸入Restart重新輸入")
+            send_text_message(re_token, "輸入錯誤，請正確輸入您平均一周的運動量(0~5000)(分鐘)\n或是輸入Restart重新開始")
     
         
     return
