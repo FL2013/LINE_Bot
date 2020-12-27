@@ -9,6 +9,7 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 from fsm import TocMachine
 from utils import send_text_message
+from self_reply import decide
 
 load_dotenv()
 
@@ -103,11 +104,7 @@ def webhook_handler():
         
         print(f"\nFSM STATE: {machine.state}")
         print(f"REQUEST BODY: \n{body}")
-        if event.message.text == "user":
-            send_text_message(event.reply_token, "read user")
-        response = machine.advance(event)
-        if response == False:
-            send_text_message(event.reply_token, "Not Entering any State")
+        decide(event.message.text)
 
     return "OK"
 
