@@ -58,6 +58,7 @@ def decide(re_token,text):
         
     return
 def result(re_token):
-    reply="年齡:"+state.old+"\n身高:"+state.height+"\n體重:"+state.weight+"\n性別:"+state.gender+"\n運動量:"+state.movement
+    reply=""
+    reply="年齡:"+(str)(state.old)+"\n身高:"+(str)(state.height)+"\n體重:"+(str)(state.weight)+"\n性別:"+(str)(state.gender)+"\n運動量:"+(str)(state.movement)
     send_text_message(re_token, reply)
     return
