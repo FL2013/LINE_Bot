@@ -1,6 +1,6 @@
 # LINE_CHAT_BOT 一天所需營養  
 
-![menu](./img/menu2.png)  
+![menu](./img/menu2.png=200*200)  
 
 ### 功能:查詢一天所需營養量  
 使用方式:  
