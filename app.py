@@ -172,8 +172,8 @@ def show_fsm():
 @app.route("/")
 def hello():
     
-    print (pydot.find_graphviz())
-    return "hello from python"
+
+    return pydot.find_graphviz()
 
 
 if __name__ == "__main__":
