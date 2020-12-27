@@ -21,6 +21,9 @@ def decide(re_token,text):
             send_text_message(re_token, "請輸入您的年齡(0~150):")
         else:
             send_text_message(re_token, "如要開始服務，請輸入 Start")
+    elif text=="Restart":
+        state.s=1
+        send_text_message(re_token, "請輸入您的年齡(0~150):")
     elif state.s==1: 
         try:
             n=(int)(text)
@@ -36,49 +39,49 @@ def decide(re_token,text):
         try:
             n=(int)(text)
         except ValueError:
-            send_text_message(re_token, "輸入錯誤，請正確輸入您的身高(0~300)(cm):")
+            send_text_message(re_token, "輸入錯誤，請正確輸入您的身高(0~300)(cm)\n或是輸入Restart重新輸入")
         if (int)(text)>0 and (int)(text)<300:
             state.height=(int)(text)
             state.s+=1
             send_text_message(re_token, "請輸入您的體重(kg):")
         else:
-            send_text_message(re_token, "輸入錯誤，請正確輸入您的身高(0~300)(cm):")
+            send_text_message(re_token, "輸入錯誤，請正確輸入您的身高(0~300)(cm)\n或是輸入Restart重新輸入")
     elif state.s==3:
         try:
             n=(int)(text)
         except ValueError:
-            send_text_message(re_token, "輸入錯誤，請正確輸入您的體重(0~200)(kg):")
+            send_text_message(re_token, "輸入錯誤，請正確輸入您的體重(0~200)(kg)\n或是輸入Restart重新輸入")
         if (int)(text)>0 and (int)(text)<200:
             state.weight=(int)(text)
             state.s+=1
             send_text_message(re_token, "請輸入您的性別(男or女):")
         else:
-            send_text_message(re_token, "輸入錯誤，請正確輸入您的體重(0~200)(kg):")
+            send_text_message(re_token, "輸入錯誤，請正確輸入您的體重(0~200)(kg)\n或是輸入Restart重新輸入")
     elif state.s==4:
         if text=="男" or text=="女":
             state.gender=text
             state.s+=1
             send_text_message(re_token, "請輸入您平均一周的運動量(分鐘):")
         else:
-            send_text_message(re_token, "輸入錯誤，請正確輸入您的性別(男or女):")
+            send_text_message(re_token, "輸入錯誤，請正確輸入您的性別(男or女)\n或是輸入Restart重新輸入")
     elif state.s==5:
         try:
             n=(int)(text)
         except ValueError:
-            send_text_message(re_token, "輸入錯誤，請正確輸入您平均一周的運動量(分鐘):")
+            send_text_message(re_token, "輸入錯誤，請正確輸入您平均一周的運動量(分鐘)\n或是輸入Restart重新輸入")
         if (int)(text)>=0 and (int)(text)<5000:
             state.movement=(int)(text)
             state.s+=1
             result(re_token)
             state.s=0
         else:
-            send_text_message(re_token, "輸入錯誤，請正確輸入您平均一周的運動量(0~5000)(分鐘):")
+            send_text_message(re_token, "輸入錯誤，請正確輸入您平均一周的運動量(0~5000)(分鐘)\n或是輸入Restart重新輸入")
     
         
     return
 def result(re_token):
     reply=""
-    reply="您的個人資料:\n年齡:"+(str)(state.old)+"\n身高:"+(str)(state.height)+"\n體重:"+(str)(state.weight)+"\n性別:"+(str)(state.gender)+"\n運動量:"+(str)(state.movement)+"\n"
+    reply="您的個人資料:\n年齡:"+(str)(state.old)+"歲\n身高:"+(str)(state.height)+"cm\n體重:"+(str)(state.weight)+"kg\n性別:"+(str)(state.gender)+"\n運動量:"+(str)(state.movement)+"分鐘/周\n"
     total_cal=0
     rice=0
     meat=0
@@ -119,14 +122,24 @@ def result(re_token):
     rice=(total_cal*0.5/4-milk*12-fruit*15)/15/4
     rice=(int)(rice+0.5)
     
-    reply=reply+"您的一天所需營養:\n"
+    sca=(int)(total_cal*0.5/4)
+    protein=(int)(total_cal*0.2/4)
+    oil_g=(int)(total_cal*0.3/9)
+    reply=reply+"\n您的一天所需營養:\n"
     reply=reply+"熱量:"+(str)(total_cal)+"大卡\n"
+    reply=reply+"澱粉:"+(str)(sca)+"克\n"
+    reply=reply+"蛋白質:"+(str)(protein)+"克\n"
+    reply=reply+"油脂:"+(str)(oil_g)+"克\n"
+    
+    reply=reply+"\n一天飲食建議:\n"
     reply=reply+"全穀雜糧:"+(str)(rice)+"碗\n"
     reply=reply+"蛋豆魚肉:"+(str)(meat)+"份\n"
     reply=reply+"蔬菜:"+(str)(veg)+"份\n"
     reply=reply+"油脂:"+(str)(oil)+"茶匙\n"
     reply=reply+"水果:"+(str)(fruit)+"份\n"
-    reply=reply+"乳製品:"+(str)(milk)+"杯"
+    reply=reply+"乳製品:"+(str)(milk)+"杯\n\n"
+    
+    reply=reply+"如要再次使用該服務，請輸入 Start"
     
     send_text_message(re_token,reply)
     
