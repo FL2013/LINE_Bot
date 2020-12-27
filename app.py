@@ -104,7 +104,8 @@ def webhook_handler():
         
         print(f"\nFSM STATE: {machine.state}")
         print(f"REQUEST BODY: \n{body}")
-        decide(event.message.text)
+        decide(event.reply_token,event.message.text)
+        
 
     return "OK"
 
