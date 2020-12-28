@@ -3,6 +3,7 @@ from linebot import LineBotApi, WebhookParser
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 class state:
+    name=""
     s = 0
     old=0
     weight=0
@@ -73,16 +74,22 @@ def decide(re_token,text):
         if (int)(text)>=0 and (int)(text)<5000:
             state.movement=(int)(text)
             state.s+=1
-            result(re_token)
-            state.s=0
+            send_text_message(re_token,"請輸入您的姓名")
         else:
             send_text_message(re_token, "輸入錯誤，請正確輸入您平均一周的運動量(0~5000)(分鐘)\n或是輸入Restart重新開始")
+    elif state.s==6:
+        state.name=(str)(text)
+        if len(state.name)<10:
+            state.s=0
+            result(re_token)
+        else:
+            send_text_message(re_token,"輸入錯誤，請正確輸入您的姓名(長度<10)\n或是輸入Restart重新開始")
     
         
     return
 def result(re_token):
     reply=""
-    reply="您的個人資料:\n年齡:"+(str)(state.old)+"歲\n身高:"+(str)(state.height)+"cm\n體重:"+(str)(state.weight)+"kg\n性別:"+(str)(state.gender)+"\n運動量:"+(str)(state.movement)+"分鐘/周\n"
+    reply="您的個人資料:\n姓名:"+state.name+"\n年齡:"+(str)(state.old)+"歲\n身高:"+(str)(state.height)+"cm\n體重:"+(str)(state.weight)+"kg\n性別:"+(str)(state.gender)+"\n運動量:"+(str)(state.movement)+"分鐘/周\n"
     total_cal=0
     rice=0
     meat=0
